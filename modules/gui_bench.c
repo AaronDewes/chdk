@@ -170,7 +170,7 @@ static void add_to_log(int really, char *title, char *txt) {
 static void add_log_head(int really) {
     if ((txtbufptr >= LOGBUFSIZE-200) || !really)
         return;
-    txtbufptr+=sprintf(txtbuf+txtbufptr,"***\n%s %s r%s\n",camera_info.chdk_ver,camera_info.build_number,camera_info.build_svnrev);
+    txtbufptr+=sprintf(txtbuf+txtbufptr,"***\n%s %s r%s\n",camera_info.chdk_ver,camera_info.build_number,camera_info.build_gitrev);
     txtbufptr+=sprintf(txtbuf+txtbufptr,"Build date: %s %s\n",camera_info.build_date,camera_info.build_time);
     txtbufptr+=sprintf(txtbuf+txtbufptr,"Camera    : %s %s\n",camera_info.platform,camera_info.platformsub);
     txtbufptr+=sprintf(txtbuf+txtbufptr,"Mode      : 0x%x\n\n",camera_info.state.mode);

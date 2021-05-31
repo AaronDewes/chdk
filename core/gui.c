@@ -905,7 +905,7 @@ static void gui_draw_fselect(__attribute__ ((unused))int arg)
 
 static const char text_raw[] =
 {
-    "CHDK Version '" HDK_VERSION " " BUILD_NUMBER "-" BUILD_SVNREV "'\0"
+    "CHDK Version '" HDK_VERSION " " BUILD_NUMBER "-" BUILD_GITREV "'\0"
     "Build: " __DATE__ " " __TIME__ "\0"
     "Camera: " PLATFORM " - " PLATFORMSUB "\0"
 // gcc version string defined at compile time rather than using sprintf to allow tools like CHIMP to indentify in binary
@@ -927,7 +927,7 @@ static void gui_show_build_info(__attribute__ ((unused))int arg)
 {
     int comp_text_index = TEXT_COUNT - 1;
     const char *comp = text[comp_text_index];
-    sprintf(buf, lang_str(LANG_MSG_BUILD_INFO_TEXT), camera_info.chdk_ver, camera_info.build_number, camera_info.build_svnrev, camera_info.build_date, camera_info.build_time, camera_info.platform, camera_info.platformsub, comp);
+    sprintf(buf, lang_str(LANG_MSG_BUILD_INFO_TEXT), camera_info.chdk_ver, camera_info.build_number, camera_info.build_gitrev, camera_info.build_date, camera_info.build_time, camera_info.platform, camera_info.platformsub, comp);
     gui_mbox_init(LANG_MSG_BUILD_INFO_TITLE, (int)buf, MBOX_FUNC_RESTORE|MBOX_TEXT_LEFT, NULL);
 }
 

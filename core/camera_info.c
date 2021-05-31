@@ -168,7 +168,7 @@ _cam_info camera_info =
     PLATFORM, PLATFORMSUB,
     HDK_VERSION, BUILD_NUMBER, 
     HDK_VERSION" ver. "BUILD_NUMBER,
-    BUILD_SVNREV, __DATE__, __TIME__,
+    BUILD_GITREV, __DATE__, __TIME__,
 #if defined(CAM_DRYOS)
     "dryos",
 #else

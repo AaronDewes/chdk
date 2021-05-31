@@ -9,8 +9,8 @@ MEMISOSIZE="(&_end-&_start)"
 # should be an absolute path
 PRIMARY_ROOT=$(topdir)platform
 include $(topdir)buildconf.inc
-# optional local version of buildconf.inc, not in SVN so it can be used in autobuilds
-# and to avoid getting accidentally included in svn diffs
+# optional local version of buildconf.inc, not in git so it can be used in autobuilds
+# and to avoid getting accidentally included in git diffs
 # you may also set your default camera here
 -include $(topdir)localbuildconf.inc
 include $(topdir)version.inc

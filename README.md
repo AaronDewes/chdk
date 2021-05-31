@@ -1,4 +1,6 @@
+# Canon Hack Development Kit
 
+```
       ######    ###     ###  ########      ###      ###
      ########   ###     ###  #########     ###      ###
     ##########  ###     ###  ##########    ###      ###
@@ -18,6 +20,7 @@
     ##########  ###     ###  ##########    ###      ###
      ########   ###     ###  #########     ###      ###
       ######    ###     ###  ########      ###      ###
+```
 
 Website:   http://chdk.wikia.com/
 Forum:     http://chdk.setepontos.com/
@@ -33,3 +36,6 @@ Software or Author are not affiliated in any way with Canon INC.
 Product and Company names mentioned herein may be the trademarks of their respective owners.
 
 For License Infomation please read COPYING
+
+---
+This is a Git copy of chdk, with a few minor improvements and changes.

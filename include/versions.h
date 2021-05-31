@@ -19,7 +19,7 @@ typedef struct
     short   major;
     short   minor;
     short   maintenance;
-    short   revision;       // SVN revision
+    short   revision;       // git revision
 } _chdk_version_t;
 
 extern _chdk_version_t chdk_version, script_version;

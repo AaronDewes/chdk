@@ -154,7 +154,7 @@ typedef struct
     char* chdk_ver;
     char* build_number;
     char* chdk_dng_ver;
-    char* build_svnrev;
+    char* build_gitrev;
     char* build_date;
     char* build_time;
     char* os;

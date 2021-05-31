@@ -127,7 +127,7 @@ void core_spytask()
     int dce_nowmode;
 #endif
     
-    parse_version(&chdk_version, BUILD_NUMBER, BUILD_SVNREV);
+    parse_version(&chdk_version, BUILD_NUMBER, BUILD_GITREV);
 
     // Init camera_info bits that can't be done statically
     camera_info_init();

@@ -114,7 +114,7 @@ void dbg_dump_write(const char *dumpname,unsigned flags, int user_data_len, char
                 camera_info.build_date,
                 camera_info.build_time,
                 camera_info.build_number,
-                camera_info.build_svnrev);
+                camera_info.build_gitrev);
 
         write(fd,&pb->h,sizeof(dumpheader));
 

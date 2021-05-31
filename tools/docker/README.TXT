@@ -92,10 +92,10 @@ The make starts in /srv/src. If you want to build in a subdirectory, you can
 use -C dir in the make command line, or use -w in docker command line to set
 the workdir.
 
-The container doesn't include svn, so it doesn't add revision numbers to builds
-and will complain (harmlessly) about "svnversion not found"
-svn could easily be included (just add it to the package list), but would
-potentially be problematic if the host system has a different version of svn.
+The container doesn't include git, so it doesn't add revision numbers to builds
+and will complain (harmlessly)
+git could easily be included (just add it to the package list), but would
+potentially be problematic if the host system has a different version of git.
 
 If you alternate compiling through the container and the native toolchain on
 windows, you can end up with confusing errors: The container leaves (Linux)

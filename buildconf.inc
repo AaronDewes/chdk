@@ -94,5 +94,5 @@ OPT_GEN_STUBS=1
 # Set the value to the language file name without extension - e.g. OPT_DEFAULT_LANG=russian
 #OPT_DEFAULT_LANG=
 
-# Default svn revision. Used when svnversion fail.
-DEF_SVN_REF=0
+# Default git revision.
+DEF_GIT_REV=0

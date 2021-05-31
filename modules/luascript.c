@@ -1855,7 +1855,7 @@ static int luaCB_get_buildinfo( lua_State* L )
   set_string_field( L,"platsub", camera_info.platformsub );
   set_string_field( L,"version", camera_info.chdk_ver );
   set_string_field( L,"build_number", camera_info.build_number );
-  set_string_field( L,"build_revision", camera_info.build_svnrev );
+  set_string_field( L,"build_revision", camera_info.build_gitrev );
   set_string_field( L,"build_date", camera_info.build_date );
   set_string_field( L,"build_time", camera_info.build_time );
   set_string_field( L,"os", camera_info.os );

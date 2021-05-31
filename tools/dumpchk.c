@@ -10,9 +10,9 @@ found at the start of the dump, and print a message/return status
 
 If you have a tree full of dumps you want to check/fix, use find, e.g.
 */
-//find . -path ./*sub/* \! -path *.svn* -type d -exec dumpchk '{}/primary.bin' \;
+//find . -path ./*sub/* \! -path *.git* -type d -exec dumpchk '{}/primary.bin' \;
 /*
-will check primary.bin in each of the platform/sub directories, skipping .svn,
+will check primary.bin in each of the platform/sub directories, skipping .git,
 reporting missing or zero sized files. 
 
 You can use -fix with the above command if you feel lucky.

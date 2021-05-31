@@ -1,6 +1,6 @@
 topdir=./
 
-tmp:=$(shell echo "BUILD_SVNREV := $(DEF_SVN_REF)" > revision.inc)
+tmp:=$(shell echo "BUILD_GITREV := $(DEF_GIT_REV)" > revision.inc)
 
 # can override on command line or *buildconf.inc for custom subsets
 CAMERA_LIST=camera_list.csv
@@ -11,22 +11,11 @@ ZIPDATE=date -R
 
 include makefile_cam.inc
 
-BUILD_SVNREV:=$(shell svnversion -cn $(topdir) | $(ESED) 's/[0-9]*:([0-9]+)[MPS]*/\1/')
-ifeq ($(BUILD_SVNREV), )
-	BUILD_SVNREV:=$(DEF_SVN_REF)
+BUILD_GITREV:=$(shell git rev-parse --short HEAD)
+ifeq ($(BUILD_GITREV), )
+	BUILD_GITREV:=$(DEF_GIT_REV)
 endif
-#for CHDK-Shell up to svn revision 1.6
-ifeq ($(BUILD_SVNREV), exported)
-	BUILD_SVNREV:=$(DEF_SVN_REF)
-endif
-ifeq ($(BUILD_SVNREV), exportiert)
-	BUILD_SVNREV:=$(DEF_SVN_REF)
-endif
-#for CHDK-Shell svn revision 1.7
-ifeq ($(BUILD_SVNREV), Unversioned directory)
-	BUILD_SVNREV:=$(DEF_SVN_REF)
-endif
-tmp:=$(shell echo "BUILD_SVNREV := $(BUILD_SVNREV)" > revision.inc)
+tmp:=$(shell echo "BUILD_GITREV := $(BUILD_GITREV)" > revision.inc)
 
 SUBDIRS=
 
@@ -62,9 +51,9 @@ endif
 infoline: platformcheck
 ifdef OPT_WARNINGS
     # send build info to stderr if OPT_WARNINGS set - useful for redirecting just build warnings to a file while still seeing which camera generated the warning (make batch 2> output.txt)
-	@echo "**** GCC $(GCC_VERSION) : BUILDING CHDK-$(VER), #$(BUILD_NUMBER)-$(BUILD_SVNREV)$(STATE) FOR $(TARGET_CAM)-$(TARGET_FW)" 1>&2
+	@echo "**** GCC $(GCC_VERSION) : BUILDING CHDK-$(VER), #$(BUILD_NUMBER)-$(BUILD_GITREV)$(STATE) FOR $(TARGET_CAM)-$(TARGET_FW)" 1>&2
 else
-	@echo "**** GCC $(GCC_VERSION) : BUILDING CHDK-$(VER), #$(BUILD_NUMBER)-$(BUILD_SVNREV)$(STATE) FOR $(TARGET_CAM)-$(TARGET_FW)"
+	@echo "**** GCC $(GCC_VERSION) : BUILDING CHDK-$(VER), #$(BUILD_NUMBER)-$(BUILD_GITREV)$(STATE) FOR $(TARGET_CAM)-$(TARGET_FW)"
 endif
 
 .PHONY: version
@@ -75,10 +64,10 @@ version: FORCE
 FORCE:
 
 
-ZIP_SMALL=$(TARGET_CAM)-$(TARGET_FW)-$(BUILD_NUMBER)-$(BUILD_SVNREV)$(STATE).zip
-ZIP_FULL=$(TARGET_CAM)-$(TARGET_FW)-$(BUILD_NUMBER)-$(BUILD_SVNREV)-full$(STATE).zip
-ZIP_SMALL_BASE=$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-$(BUILD_SVNREV)$(STATE).zip
-ZIP_FULL_BASE=$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-$(BUILD_SVNREV)-full$(STATE).zip
+ZIP_SMALL=$(TARGET_CAM)-$(TARGET_FW)-$(BUILD_NUMBER)-$(BUILD_GITREV)$(STATE).zip
+ZIP_FULL=$(TARGET_CAM)-$(TARGET_FW)-$(BUILD_NUMBER)-$(BUILD_GITREV)-full$(STATE).zip
+ZIP_SMALL_BASE=$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-$(BUILD_GITREV)$(STATE).zip
+ZIP_FULL_BASE=$(PLATFORM)-$(PLATFORMSUB)-$(BUILD_NUMBER)-$(BUILD_GITREV)-full$(STATE).zip
 ifdef PLATFORMOS
     ifeq ($(PLATFORMOS),vxworks)
         FW_UPD_FILE=$(bin)/PS.FIR
@@ -148,7 +137,7 @@ firzip: version firzipsub
 firzipsub: infoline clean firsub
 	@echo '->' $(VER)-$(ZIP_SMALL)
 	rm -f $(bin)/$(VER)-$(ZIP_SMALL)
-	LANG=C echo "CHDK-$(VER) for $(TARGET_CAM) fw:$(TARGET_FW) build:$(BUILD_NUMBER)-$(BUILD_SVNREV) date:`$(ZIPDATE)`" | \
+	LANG=C echo "CHDK-$(VER) for $(TARGET_CAM) fw:$(TARGET_FW) build:$(BUILD_NUMBER)-$(BUILD_GITREV) date:`$(ZIPDATE)`" | \
 		zip -9jz $(bin)/$(VER)-$(ZIP_SMALL) $(bin)/DISKBOOT.BIN $(FW_UPD_FILE) > $(DEVNULL)
 	rm -f $(bin)/DISKBOOT.BIN $(FW_UPD_FILE)
 	zip -9 $(bin)/$(VER)-$(ZIP_SMALL) $(chdk)/MODULES/* > $(DEVNULL)
@@ -167,19 +156,19 @@ firzipsubcomplete: infoline clean firsub
 	 if [ ! -z "$$COMPATFW" ] ; then \
 	  printf " compatible fw:$$COMPATFW" ; \
 	 fi ; \
-	 printf " PID:$(TARGET_PID)\r\nbuild:$(BUILD_NUMBER)-$(BUILD_SVNREV)$(STATE) date:`$(ZIPDATE)`\r\n\r\n*** Camera specific notes ***\r\n" ) > $(doc)/camnotes.txt
+	 printf " PID:$(TARGET_PID)\r\nbuild:$(BUILD_NUMBER)-$(BUILD_GITREV)$(STATE) date:`$(ZIPDATE)`\r\n\r\n*** Camera specific notes ***\r\n" ) > $(doc)/camnotes.txt
 	cat $(cam)/notes.txt >> $(doc)/camnotes.txt
 	cat $(doc)/1_intro.txt $(doc)/camnotes.txt $(doc)/2_installation.txt $(doc)/3_faq.txt $(doc)/4_urls.txt $(doc)/5_gpl.txt $(doc)/6_ubasic_copyright.txt > $(doc)/readme.txt
 	@echo '->' $(ZIP_SMALL)
 	rm -f $(bin)/$(ZIP_SMALL)
-	LANG=C echo "CHDK-$(VER) for $(TARGET_CAM) fw:$(TARGET_FW) build:$(BUILD_NUMBER)-$(BUILD_SVNREV)$(STATE) date:`$(ZIPDATE)`" | \
+	LANG=C echo "CHDK-$(VER) for $(TARGET_CAM) fw:$(TARGET_FW) build:$(BUILD_NUMBER)-$(BUILD_GITREV)$(STATE) date:`$(ZIPDATE)`" | \
 		zip -9jz $(bin)/$(ZIP_SMALL) $(bin)/DISKBOOT.BIN $(FW_UPD_FILE) $(doc)/changelog.txt $(doc)/readme.txt $(doc)/camnotes.txt > $(DEVNULL)
 	rm -f $(bin)/DISKBOOT.BIN $(FW_UPD_FILE)
 	@echo '->' $(ZIP_FULL)
 	cp -f $(bin)/$(ZIP_SMALL) $(bin)/$(ZIP_FULL)
 	zip -9 $(bin)/$(ZIP_SMALL) $(chdk)/MODULES/* > $(DEVNULL)
 	zip -9j $(bin)/$(ZIP_FULL) $(tools)/vers.req > $(DEVNULL)
-	zip -9r $(bin)/$(ZIP_FULL) $(chdk)/* -x CHDK/logo\*.dat \*Makefile \*.svn\* > $(DEVNULL)
+	zip -9r $(bin)/$(ZIP_FULL) $(chdk)/* -x CHDK/logo\*.dat \*Makefile > $(DEVNULL)
 
 
 firzipsubcompletecopy: infoline
